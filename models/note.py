@@ -1,9 +1,9 @@
 from typing import List, Dict, TYPE_CHECKING
 import re
-import string
 from gensim import corpora, models
 from gensim.utils import simple_preprocess
 from .base_class import BaseClass
+from .nlp_processor import NLPProcessor
 
 if TYPE_CHECKING:
     from .tag import Tag
@@ -13,8 +13,6 @@ if TYPE_CHECKING:
 
 
 class Note(BaseClass):
-    _stop_words = None
-
     def __init__(self):
         super().__init__()
         self.name: str = ""
@@ -25,12 +23,6 @@ class Note(BaseClass):
         self.source: List["SourceNote"] = []
         self.attachment: List["Attachment"] = []
         self.draft: List["Draft"] = []
-
-    @staticmethod
-    def _get_stop_words() -> None:
-        if Note._stop_words is None:
-            with open("stop_words_english.txt", "r") as f:
-                Note._stop_words = set(word.strip().lower() for word in f)
 
     @staticmethod
     def _split_into_sentences(text: str) -> List[str]:
@@ -83,33 +75,9 @@ class Note(BaseClass):
             return self.high_frequency_words
 
         # Basic stop words
-        stop_words = self._get_stop_words()
-        text_clean = self.text.translate(str.maketrans("", "", string.punctuation))
-        words = text_clean.lower().split()
-        non_trivial_words = [w for w in words if w not in self._stop_words]
-
-        word_count = {}
-
-        # stemming words and counting
-        for word in non_trivial_words:
-            if len(word) > 1:
-                root_word = word
-                if word.endswith("ing") and len(word) > 4:
-                    root_word = word[:-3]
-                elif word.endswith("ed") and len(word) > 4:
-                    root_word = word[:-2]
-
-                word_count[root_word] = word_count.get(root_word, 0) + 1
-
-        frequent_words = {}
-        for word, count in word_count.items():
-            if count > 1:
-                frequent_words[word] = count
-
-        # Sort by frequency (descending), then alphabetically
-        sorted_words = dict(sorted(frequent_words.items(), key=lambda x: (-x[1], x[0])))
-
-        self.high_frequency_words = sorted_words
+        clean_text = NLPProcessor.text_clean(self.text)
+        hfw = NLPProcessor.calculate_high_frequency_words(clean_text)
+        self.high_frequency_words = hfw
         return self.high_frequency_words
 
     def get_themes(self) -> str:
@@ -130,18 +98,18 @@ class Note(BaseClass):
         elif len(sentences) == 1 and len(sentences[0].split()) < 5:
             # Single short sentence - just use filtered words
             processed_text = simple_preprocess(sentences[0], deacc=True)
-            if Note._stop_words is None:
+            if NLPProcessor._stop_words is None:
                 self._get_stop_words()
             filtered_tokens = [
                 token
                 for token in processed_text
-                if token not in Note._stop_words and len(token) > 2
+                if token not in NLPProcessor._stop_words and len(token) > 2
             ]
             self.theme = filtered_tokens[:3] if filtered_tokens else []
             return
 
         # Preprocess each sentence
-        if Note._stop_words is None:
+        if NLPProcessor._stop_words is None:
             self._get_stop_words()
 
         processed_sentences = []
@@ -150,7 +118,7 @@ class Note(BaseClass):
             filtered_tokens = [
                 token
                 for token in tokens
-                if token not in Note._stop_words and len(token) > 2
+                if token not in NLPProcessor._stop_words and len(token) > 2
             ]
             if (
                 len(filtered_tokens) >= 2

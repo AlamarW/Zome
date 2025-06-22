@@ -84,10 +84,10 @@ def test_set_theme_basic():
 
     # Theme should contain relevant topic words
     theme = note.theme
-    assert isinstance(theme, str)
-    assert len(theme.strip()) > 0
+    assert isinstance(theme, list)
+    assert len(theme) > 0
     # Should contain words related to the topic
-    theme_lower = theme.lower()
+    theme_lower = [word.lower() for word in theme]
     relevant_words = [
         "machine",
         "learning",
@@ -108,11 +108,11 @@ def test_set_theme_short_text():
 
     # For short text, should fallback to available words
     theme = note.theme
-    assert isinstance(theme, str)
+    assert isinstance(theme, list)
     # With sentence-level LDA, very short text might not generate topics
     # Should either be empty or contain meaningful words
     if theme:
-        theme_lower = theme.lower()
+        theme_lower = [word.lower() for word in theme]
         assert (
             "simple" in theme_lower or "short" in theme_lower or "note" in theme_lower
         )
@@ -123,7 +123,7 @@ def test_set_theme_empty_text():
     note.set_text("")
 
     # Empty text should result in empty theme
-    assert note.theme == ""
+    assert note.theme == []
 
 
 def test_set_theme_multiple_sentences():
@@ -135,10 +135,10 @@ def test_set_theme_multiple_sentences():
 
     # With multiple sentences, sentence-level LDA should find coherent topics
     theme = note.theme
-    assert isinstance(theme, str)
-    assert len(theme.strip()) > 0
+    assert isinstance(theme, list)
+    assert len(theme) > 0
 
-    theme_lower = theme.lower()
+    theme_lower = [word.lower() for word in theme]
     # Should capture the main topic (Python/programming/data)
     relevant_words = [
         "python",
@@ -158,9 +158,9 @@ def test_set_theme_single_sentence():
 
     # Single sentence should still work but may have limited topic modeling
     theme = note.theme
-    assert isinstance(theme, str)
+    assert isinstance(theme, list)
     # Either empty (if too short for sentence-level) or contains relevant words
     if theme:
-        theme_lower = theme.lower()
+        theme_lower = [word.lower() for word in theme]
         relevant_words = ["artificial", "intelligence", "computing", "modern"]
         assert any(word in theme_lower for word in relevant_words)

@@ -74,3 +74,93 @@ def test_set_high_frequency_words():
         "test": 2,
         "fine": 2,
     }  # returns most frequent used words, minus stop words
+
+
+def test_set_theme_basic():
+    note = Note()
+    note.set_text(
+        "Machine learning and artificial intelligence are transforming technology. Data science uses algorithms to analyze patterns in large datasets. Machine learning models require extensive training data to perform well."
+    )
+
+    # Theme should contain relevant topic words
+    theme = note.theme
+    assert isinstance(theme, str)
+    assert len(theme.strip()) > 0
+    # Should contain words related to the topic
+    theme_lower = theme.lower()
+    relevant_words = [
+        "machine",
+        "learning",
+        "data",
+        "science",
+        "algorithm",
+        "technology",
+        "training",
+        "models",
+    ]
+    # With sentence-level LDA, expect at least one relevant word
+    assert any(word in theme_lower for word in relevant_words)
+
+
+def test_set_theme_short_text():
+    note = Note()
+    note.set_text("Simple short note.")
+
+    # For short text, should fallback to available words
+    theme = note.theme
+    assert isinstance(theme, str)
+    # With sentence-level LDA, very short text might not generate topics
+    # Should either be empty or contain meaningful words
+    if theme:
+        theme_lower = theme.lower()
+        assert (
+            "simple" in theme_lower or "short" in theme_lower or "note" in theme_lower
+        )
+
+
+def test_set_theme_empty_text():
+    note = Note()
+    note.set_text("")
+
+    # Empty text should result in empty theme
+    assert note.theme == ""
+
+
+def test_set_theme_multiple_sentences():
+    note = Note()
+    note.set_text(
+        "Python is a programming language. It is used for data analysis and machine learning. "
+        "Scientists love Python for its simplicity. Data scientists use Python libraries extensively."
+    )
+
+    # With multiple sentences, sentence-level LDA should find coherent topics
+    theme = note.theme
+    assert isinstance(theme, str)
+    assert len(theme.strip()) > 0
+
+    theme_lower = theme.lower()
+    # Should capture the main topic (Python/programming/data)
+    relevant_words = [
+        "python",
+        "data",
+        "programming",
+        "scientists",
+        "analysis",
+        "machine",
+        "learning",
+    ]
+    assert any(word in theme_lower for word in relevant_words)
+
+
+def test_set_theme_single_sentence():
+    note = Note()
+    note.set_text("Artificial intelligence transforms modern computing.")
+
+    # Single sentence should still work but may have limited topic modeling
+    theme = note.theme
+    assert isinstance(theme, str)
+    # Either empty (if too short for sentence-level) or contains relevant words
+    if theme:
+        theme_lower = theme.lower()
+        relevant_words = ["artificial", "intelligence", "computing", "modern"]
+        assert any(word in theme_lower for word in relevant_words)

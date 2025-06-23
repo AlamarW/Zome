@@ -24,7 +24,7 @@ class Note(BaseClass):
 
     def set_name(self, name: str) -> None:
         if not isinstance(name, str):
-            self.name = (False, "Note.name must be a string")
+            raise TypeError("Note.name must be a string")
         elif re.match(r"^[a-zA-Z0-9 .\-?!']+$", name):
             self.name = name
         else:

@@ -69,7 +69,7 @@ def test_set_text_invalid_note():
 def test_set_high_frequency_words():
     note = Note()
     note.set_text("Testing, test but this is fine. Fine.")
-
+    print(note.get_high_frequency_words())
     assert note.get_high_frequency_words() == {
         "test": 2,
         "fine": 2,

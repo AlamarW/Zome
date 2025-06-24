@@ -28,9 +28,8 @@ class Note(BaseClass):
         elif re.match(r"^[a-zA-Z0-9 .\-?!']+$", name):
             self.name = name
         else:
-            self.name = (
-                False,
-                "Name can only include numbers letters, spaces, dashes (-), and regular punctuation",
+            raise ValueError(
+                "Note.name should only be alphanumeric, space dash period or question mark"
             )
 
     def get_name(self) -> str:

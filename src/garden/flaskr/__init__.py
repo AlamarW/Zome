@@ -20,8 +20,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/notes")
-    def note_post():
+    @app.route("/note")
+    def client_test():
         return "TEST"
+
+    @app.route("/note", methods=["POST"])
+    def test_create_note():
+        return "", 201
 
     return app

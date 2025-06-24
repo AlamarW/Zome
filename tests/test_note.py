@@ -17,13 +17,10 @@ def test_set_name_numbers_spaces():
 
 def test_set_forbidden_chars():
     note = Note()
-    note.set_name(
-        "@#$"
-    )  # names should only be alnum() space, dash, period, and question mark
-    assert note.get_name() == (
-        False,
-        "Name can only include numbers letters, spaces, dashes (-), and regular punctuation",
-    )
+    with pytest.raises(ValueError):
+        note.set_name(
+            "@#$"
+        )  # names should only be alnum() space, dash, period, and question mark
 
 
 def test_set_name_valid():
@@ -35,9 +32,8 @@ def test_set_name_valid():
 
 def test_set_name_not_string():
     note = Note()
-    note.set_name(1234)
-
-    assert note.get_name() == (False, "Note.name must be a string")
+    with pytest.raises(TypeError):
+        note.set_name(1234)
 
 
 def test_set_text_empty():
@@ -61,9 +57,9 @@ def test_set_text_valid_note():
 
 def test_set_text_invalid_note():
     note = Note()
-    note.set_text(123)
 
-    assert note.get_text() == (False, "Note must be a string")
+    with pytest.raises(TypeError):
+        note.set_text(123)
 
 
 def test_set_high_frequency_words():

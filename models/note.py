@@ -24,13 +24,12 @@ class Note(BaseClass):
 
     def set_name(self, name: str) -> None:
         if not isinstance(name, str):
-            self.name = (False, "Note.name must be a string")
+            raise TypeError("Note.name must be a string")
         elif re.match(r"^[a-zA-Z0-9 .\-?!']+$", name):
             self.name = name
         else:
-            self.name = (
-                False,
-                "Name can only include numbers letters, spaces, dashes (-), and regular punctuation",
+            raise ValueError(
+                "Note.name should only be alphanumeric, space dash period or question mark"
             )
 
     def get_name(self) -> str:
@@ -38,7 +37,8 @@ class Note(BaseClass):
 
     def set_text(self, text: str = "") -> None:
         if not isinstance(text, str):
-            self.text = (False, "Note must be a string")
+            raise TypeError("Note.text should be a string")
+
         else:
             self.text = text
             self.set_high_frequency_words()

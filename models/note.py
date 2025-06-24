@@ -37,7 +37,8 @@ class Note(BaseClass):
 
     def set_text(self, text: str = "") -> None:
         if not isinstance(text, str):
-            self.text = (False, "Note must be a string")
+            raise TypeError("Note.text should be a string")
+
         else:
             self.text = text
             self.set_high_frequency_words()

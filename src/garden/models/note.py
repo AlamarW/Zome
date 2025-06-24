@@ -17,7 +17,7 @@ class Note(BaseClass):
         self.text: str = ""
         self.high_frequency_words: Dict[str, int] = {}
         self.unique_words: List[str] = []  # words that are uncommon
-        self.theme: List[str] = []
+        self.themes: List[str] = []
         self.source: List["SourceNote"] = []
         self.attachment: List["Attachment"] = []
         self.draft: List["Draft"] = []
@@ -42,7 +42,7 @@ class Note(BaseClass):
         else:
             self.text = text
             self.set_high_frequency_words()
-            self.set_theme()
+            self.set_themes()
 
     def get_text(self) -> str:
         return self.text
@@ -62,11 +62,11 @@ class Note(BaseClass):
     def get_themes(self) -> str:
         pass
 
-    def set_theme(self) -> None:
+    def set_themes(self) -> None:
         if not self.text or not isinstance(self.text, str):
-            self.theme = []
-        theme = NLPProcessor.determine_themes(self.text)
-        self.theme = theme
+            self.themes = []
+        themes = NLPProcessor.determine_themes(self.text)
+        self.themes = themes
 
     def get_source(self) -> List["SourceNote"]:
         pass
@@ -89,7 +89,7 @@ class Note(BaseClass):
     def find_similar_notes(self, notes: List["Note"]) -> List["Note"]:
         pass
 
-    def get_notes_by_theme(self, theme: str, notes: List["Note"]) -> List["Note"]:
+    def get_notes_by_themes(self, themes: str, notes: List["Note"]) -> List["Note"]:
         pass
 
     def find_connections_by_words(self, notes: List["Note"]) -> List["Note"]:

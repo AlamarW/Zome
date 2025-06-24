@@ -1,6 +1,19 @@
 import os
+import uuid
+from flask import Flask, request, jsonify
+from typing import Dict, Any
+from garden.models.note import Note
 
-from flask import Flask
+
+def note_to_dict(note: Note) -> Dict[str, Any]:
+    """Convert Note Domain object to dictionary for JSON"""
+    return {
+        "id": note.uuid,
+        "name": note.name,
+        "text": note.text,
+        "created_at": note.date_created,
+        "updated_at": note.date_edited,
+    }
 
 
 def create_app(test_config=None):
@@ -26,6 +39,13 @@ def create_app(test_config=None):
 
     @app.route("/note", methods=["POST"])
     def test_create_note():
-        return "", 201
+        data = request.get_json()
+        note = Note()
+        note.set_name(data["name"])
+        text = data.get("text", "")
+        note.set_text(text)
+        response_data = note_to_dict(note)
+
+        return jsonify(response_data), 201
 
     return app

@@ -57,9 +57,9 @@ def test_set_text_valid_note():
 
 def test_set_text_invalid_note():
     note = Note()
-    note.set_text(123)
 
-    assert note.get_text() == (False, "Note must be a string")
+    with pytest.raises(TypeError):
+        note.set_text(123)
 
 
 def test_set_high_frequency_words():

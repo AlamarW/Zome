@@ -1,6 +1,6 @@
 import pytest
 
-from models.note import Note
+from garden.models.note import Note
 
 
 def test_set_name():

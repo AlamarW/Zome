@@ -1,6 +1,6 @@
 import pytest
 
-from models.nlp_processor import NLPProcessor
+from garden.models.nlp_processor import NLPProcessor
 
 
 def test_get_stop_words():

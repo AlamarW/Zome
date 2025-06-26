@@ -60,7 +60,7 @@ class Note(BaseClass):
         self.high_frequency_words = hfw
 
     def get_themes(self) -> str:
-        pass
+        return self.themes
 
     def set_themes(self) -> None:
         if not self.text or not isinstance(self.text, str):

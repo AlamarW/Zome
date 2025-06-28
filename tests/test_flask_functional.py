@@ -38,15 +38,6 @@ def test_create_note_success(client):
     assert "updated_at" in response_data
     assert response_data["high_frequency_words"] == {"machine": 2}
     assert response_data["themes"] == ["sample", "note", "machine"]
-    """
-    # Check NLP processing occurred
-    assert "high_frequency_words" in response_data
-    assert "theme" in response_data
-    assert isinstance(response_data["high_frequency_words"], dict)
-    assert isinstance(response_data["theme"], list)
 
-    # Check relationships initialized
-    assert response_data["source"] == []
-    assert response_data["attachment"] == []
-    assert response_data["draft"] == []
-    """
+def test_get_note_by_name(client):
+    pass

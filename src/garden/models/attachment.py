@@ -1,4 +1,4 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .note import Note
@@ -7,11 +7,11 @@ if TYPE_CHECKING:
 
 
 class Attachment:
-    def __init__(self):
+    def __init__(self)-> None:
         self.attachment: str = ""  # path to attachment
-        self.note: List['Note'] = []
-        self.source: List['SourceNote'] = []
-        self.draft: List['Draft'] = []
+        self.note: list['Note'] = []
+        self.source: list['SourceNote'] = []
+        self.draft: list['Draft'] = []
 
     def set_attachment(self, path: str) -> None:
         pass

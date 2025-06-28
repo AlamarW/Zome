@@ -1,5 +1,3 @@
-import pytest
-
 from garden.models.nlp_processor import NLPProcessor
 
 

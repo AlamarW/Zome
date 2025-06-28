@@ -1,26 +1,26 @@
-from typing import List, Dict, TYPE_CHECKING
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import re
 from .base_class import BaseClass
 from .nlp_processor import NLPProcessor
 
 if TYPE_CHECKING:
-    from .tag import Tag
     from .source_note import SourceNote
     from .attachment import Attachment
     from .draft import Draft
 
 
 class Note(BaseClass):
-    def __init__(self):
+    def __init__(self)->None:
         super().__init__()
         self.name: str = ""
         self.text: str = ""
-        self.high_frequency_words: Dict[str, int] = {}
-        self.unique_words: List[str] = []  # words that are uncommon
-        self.themes: List[str] = []
-        self.source: List["SourceNote"] = []
-        self.attachment: List["Attachment"] = []
-        self.draft: List["Draft"] = []
+        self.high_frequency_words: dict[str, int] = {}
+        self.unique_words: list[str] = []  # words that are uncommon
+        self.themes: list[str] = []
+        self.source: list["SourceNote"] = []
+        self.attachment: list["Attachment"] = []
+        self.draft: list["Draft"] = []
 
     def set_name(self, name: str) -> None:
         if not isinstance(name, str):
@@ -47,10 +47,10 @@ class Note(BaseClass):
     def get_text(self) -> str:
         return self.text
 
-    def get_high_frequency_words(self) -> Dict[str, int]:
+    def get_high_frequency_words(self) -> dict[str, int]:
         return self.high_frequency_words
 
-    def set_high_frequency_words(self) -> Dict[str, int]:
+    def set_high_frequency_words(self) -> None:
         if not self.text or not isinstance(self.text, str):
             self.high_frequency_words = {}
 
@@ -59,7 +59,7 @@ class Note(BaseClass):
         hfw = NLPProcessor.calculate_high_frequency_words(clean_text)
         self.high_frequency_words = hfw
 
-    def get_themes(self) -> str:
+    def get_themes(self) -> list[str]:
         return self.themes
 
     def set_themes(self) -> None:
@@ -67,33 +67,34 @@ class Note(BaseClass):
             self.themes = []
         themes = NLPProcessor.determine_themes(self.text)
         self.themes = themes
-
-    def get_source(self) -> List["SourceNote"]:
+"""
+    def get_source(self) -> list["SourceNote"]:
         pass
 
-    def set_source(self, source: List["SourceNote"]) -> None:
+    def set_source(self, source: list["SourceNote"]) -> None:
         pass
 
-    def get_attachment(self) -> List["Attachment"]:
+    def get_attachment(self) -> list["Attachment"]:
         pass
 
-    def set_attachment(self, attachment: List["Attachment"]) -> None:
+    def set_attachment(self, attachment: list["Attachment"]) -> None:
         pass
 
-    def get_draft(self) -> List["Draft"]:
+    def get_draft(self) -> list["Draft"]:
         pass
 
-    def set_draft(self, draft: List["Draft"]) -> None:
+    def set_draft(self, draft: list["Draft"]) -> None:
         pass
 
-    def find_similar_notes(self, notes: List["Note"]) -> List["Note"]:
+    def find_similar_notes(self, notes: list["Note"]) -> list["Note"]:
         pass
 
-    def get_notes_by_themes(self, themes: str, notes: List["Note"]) -> List["Note"]:
+    def get_notes_by_themes(self, themes: str, notes: list["Note"]) -> list["Note"]:
         pass
 
-    def find_connections_by_words(self, notes: List["Note"]) -> List["Note"]:
+    def find_connections_by_words(self, notes: list["Note"]) -> list["Note"]:
         pass
 
     def update_nlp_data(self) -> None:
         pass
+"""

@@ -1,11 +1,9 @@
 import os
-import uuid
-from flask import Flask, request, jsonify
-from typing import Dict, Any
+from flask import Flask, request, jsonify # type: ignore
 from garden.models.note import Note
 
 
-def note_to_dict(note: Note) -> Dict[str, Any]:
+def note_to_dict(note: Note) -> dict[str, object]:
     """Convert Note Domain object to dictionary for JSON"""
     return {
         "id": note.uuid,
@@ -13,20 +11,23 @@ def note_to_dict(note: Note) -> Dict[str, Any]:
         "text": note.text,
         "created_at": note.date_created,
         "updated_at": note.date_edited,
+        "high_frequency_words": note.high_frequency_words,
+        "themes": note.themes
+
     }
 
 
-def create_app(test_config=None):
+def create_app(test_config: dict[str, object] | None=None)-> Flask:
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
+    _ = app.config.from_mapping(
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
 
     if test_config is None:
-        app.config.from_pyfile("config.py", silent=True)
+        _ = app.config.from_pyfile("config.py", silent=True)
     else:
-        app.config.from_mapping(test_config)
+       _ = app.config.from_mapping(test_config)
 
     try:
         os.makedirs(app.instance_path)

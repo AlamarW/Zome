@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import TYPE_CHECKING
 from .note import Note
 
@@ -6,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class SourceNote(Note):
-    def __init__(self):
+    def __init__(self)-> None:
         super().__init__()
         self.source_name: str = ""
         self.raw_notes: str = ""

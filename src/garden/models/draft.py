@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class Draft(BaseClass):
-    def __init__(self):
+    def __init__(self)-> None:
         super().__init__()
         self.name: str = ""
         self.type: str = ""  # "essay", "story", etc

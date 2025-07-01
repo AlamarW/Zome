@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 import re
 from .base_class import BaseClass
 from .nlp_processor import NLPProcessor
+from .tag import Tag
 
 if TYPE_CHECKING:
     from .source_note import SourceNote
@@ -21,6 +22,7 @@ class Note(BaseClass):
         self.source: list["SourceNote"] = []
         self.attachment: list["Attachment"] = []
         self.draft: list["Draft"] = []
+        #self.tags = list["Tag"] = []
 
     def set_name(self, name: str) -> None:
         if not isinstance(name, str):

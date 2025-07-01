@@ -162,3 +162,9 @@ def test_set_themes_single_sentence():
         themes_lower = [word.lower() for word in theme]
         relevant_words = ["artificial", "intelligence", "computing", "modern"]
         assert any(word in themes_lower for word in relevant_words)
+
+def test_set_note_tags():
+    note = Note()
+    assert False
+    # We're making test that will take user generated tag objects, and convert them into tags. In note, we've commented out tags, we'll have to change that first and then go from there.
+    

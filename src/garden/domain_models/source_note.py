@@ -1,27 +1,13 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 from .note import Note
-
-if TYPE_CHECKING:
-    pass
 
 
 class SourceNote(Note):
+    _current_types: set[str] = {"book", "video", "magazine", "newspaper", "article", "lecture"}
     def __init__(self)-> None:
         super().__init__()
-        self.source_name: str = ""
-        self.source_notes: str = ""
         self.author: str = ""
         self.source_type: str = ""  # "book", "podcast", etc
-
-    def get_source_notes(self) -> str:
-        return self.source_notes
-
-    def set_source_notes(self, raw_notes: str) -> None:
-        if isinstance(raw_notes, str):
-            self.source_notes = raw_notes
-        else:
-            raise TypeError
 
     def get_author(self) -> str:
         return self.author
@@ -33,7 +19,12 @@ class SourceNote(Note):
             raise TypeError
 
     def get_source_type(self) -> str:
-        pass
+        return self.source_type
 
     def set_source_type(self, source_type: str) -> None:
-        pass
+        if isinstance(source_type, str):
+            source_type = source_type.strip().lower()
+            SourceNote._current_types.add(source_type)
+            self.source_type = source_type
+        else:
+            raise TypeError

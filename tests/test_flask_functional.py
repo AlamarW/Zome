@@ -1,6 +1,6 @@
-import pytest
+import pytest # type: ignore
 import json
-from garden.flaskr import create_app
+from garden.flaskr import create_app # type: ignore
 
 
 @pytest.fixture

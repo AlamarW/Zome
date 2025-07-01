@@ -67,6 +67,7 @@ class Note(BaseClass):
             self.themes = []
         themes = NLPProcessor.determine_themes(self.text)
         self.themes = themes
+
 """
     def get_source(self) -> list["SourceNote"]:
         pass

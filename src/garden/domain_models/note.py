@@ -22,6 +22,7 @@ class Note(BaseClass):
         self.source: list["SourceNote"] = []
         self.attachment: list["Attachment"] = []
         self.draft: list["Draft"] = []
+        self.tag: list["str"] = []
 
     def set_name(self, name: str) -> None:
         if not isinstance(name, str):

@@ -163,3 +163,9 @@ def test_set_themes_single_sentence():
         relevant_words = ["artificial", "intelligence", "computing", "modern"]
         assert any(word in themes_lower for word in relevant_words)
 
+def test_set_tags():
+    note = Note()
+    
+    note.set_tags("#Test #Tags")
+
+    assert note.tags == ["#Test", "#Tags"]

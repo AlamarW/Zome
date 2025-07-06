@@ -3,7 +3,6 @@ import uuid
 from datetime import datetime
 
 if TYPE_CHECKING:
-    from .connection import Connection
     from .tag import Tag
 
 
@@ -12,7 +11,7 @@ class BaseClass:
         self.uuid: uuid.UUID = uuid.uuid4()
         self.date_created: datetime = datetime.now()
         self.date_edited: datetime = datetime.now()
-        self.tags: list["Tag"] = []
+        self.tags: list[str] = []
 
     def set_uuid(self, uuid: uuid.UUID) -> None:
         pass
@@ -35,8 +34,10 @@ class BaseClass:
     def get_tags(self) -> list["Tag"]:
         pass
 
-    def set_tags(self, tags: list["Tag"]) -> None:
-        pass
+    def set_tags(self, tags: str) -> None:
+        tags = tags.split()
+        tags = [f"#{tag.title()}" if tag[0] != "#" else f"{tag.title()}" for tag in tags]
+        self.tags = tags
 
     def add_tag(self, tag: "Tag") -> None:
         pass

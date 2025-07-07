@@ -45,6 +45,30 @@ def test_remove_tag():
 
     assert base.tags == {"#Not_This_One"}
 
+def test_remove_tag_not_formatted():
+    base = BaseClass()
+    base.set_tags("#Not_This_One #This_One")
+
+    base.remove_tag("This_One")
+
+    assert base.tags == {"#Not_This_One"}
+
+def test_remove_tag_invalid_type():
+    base = BaseClass()
+    base.set_tags("#Tags_To_Have #Tags2")
+
+    with pytest.raises(TypeError):
+        base.remove_tag(1234)
+
+def test_compare_eqaul_tags():
+    base1 = BaseClass()
+    base2 = BaseClass()
+    base1.set_tags("#Tag_To_Compare")
+    base2.set_tags("#Tag_To_Compare")
+
+    assert compare_equal_tags(base1, base2) == True
+
+
 
 def test_set_uuid():
     base = BaseClass()

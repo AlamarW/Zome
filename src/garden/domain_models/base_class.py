@@ -50,8 +50,12 @@ class BaseClass:
         else:
             raise TypeError
 
-    def remove_tag(self, tag: "Tag") -> None:
-        pass
+    def remove_tag(self, tag: str) -> None:
+        f_tag = self._tag_formatter(tag)
+        self.tags.remove(f_tag)
+
+    def compare_equal_tags(self, other) -> bool:
+        raise NotImplemented
 
     def find_tag_connections(self, entities: list["BaseClass"]) -> list["Connection"]:
         pass

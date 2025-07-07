@@ -3,7 +3,6 @@ from .nlp_processor import NLPProcessor
 from .note import Note
 from .source_note import SourceNote
 from .attachment import Attachment
-from .tag import Tag
 from .draft import Draft
 
 __all__ = [
@@ -12,6 +11,5 @@ __all__ = [
     'Note',
     'SourceNote',
     'Attachment',
-    'Tag',
     'Draft',
 ]

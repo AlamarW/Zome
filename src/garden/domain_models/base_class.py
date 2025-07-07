@@ -55,17 +55,4 @@ class BaseClass:
         self.tags.remove(f_tag)
 
     def compare_equal_tags(self, other) -> bool:
-        raise NotImplemented
-
-    def find_tag_connections(self, entities: list["BaseClass"]) -> list["Connection"]:
-        pass
-
-    def find_word_connections(self, entities: list["BaseClass"]) -> list["Connection"]:
-        pass
-
-    def find_theme_connections(self, entities: list["BaseClass"]) -> list["Connection"]:
-        pass
-
-    def get_all_connections(self) -> list["Connection"]:
-        pass
-
+        return self.tags == other.tags

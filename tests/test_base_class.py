@@ -60,13 +60,13 @@ def test_remove_tag_invalid_type():
     with pytest.raises(TypeError):
         base.remove_tag(1234)
 
-def test_compare_eqaul_tags():
+def test_compare_equal_tags():
     base1 = BaseClass()
     base2 = BaseClass()
     base1.set_tags("#Tag_To_Compare")
     base2.set_tags("#Tag_To_Compare")
 
-    assert compare_equal_tags(base1, base2) == True
+    assert base1.compare_equal_tags(base2) == True
 
 
 

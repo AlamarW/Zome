@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 import re
 from .base_class import BaseClass
 from .nlp_processor import NLPProcessor
-from .tag import Tag
 
 if TYPE_CHECKING:
     from .source_note import SourceNote

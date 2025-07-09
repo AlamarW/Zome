@@ -13,6 +13,9 @@ class Draft(BaseClass):
         self.type: str = ""  # "essay", "story", etc
         self.text: str = ""
 
+    def _add_allowed_type(allowed_type:str)-> None:
+        Draft.APPROVED_TYPES.add(allowed_type.lower())
+
     def get_name(self) -> str:
         return self.name
 

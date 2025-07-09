@@ -38,3 +38,4 @@ def test_add_allowed_type():
 
     assert Draft.show_allowed_types() == {"essay", "article", "story", "novel", "journal", "column"}
 
+

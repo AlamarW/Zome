@@ -14,7 +14,8 @@ class Attachment:
         self.draft: list['Draft'] = []
 
     def set_attachment(self, path: str) -> None:
-        pass
+        if isinstance(path, str):
+            self.attachment = path
 
     def get_attachment(self) -> str:
-        pass
+        return self.attachment

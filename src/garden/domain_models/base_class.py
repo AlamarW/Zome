@@ -13,17 +13,17 @@ class BaseClass:
     def get_uuid(self) -> uuid.UUID:
         return self.uuid
 
-    def set_date_created(self, date: datetime) -> None:
-        pass
+    def set_date_created(self, date: datetime) -> datetime:
+        self.date_created = date
 
     def get_date_created(self) -> datetime:
         return self.date_created
 
-    def set_date_edited(self, date: datetime) -> None:
-        pass
+    def set_date_edited(self, date: datetime) -> datetime:
+        self.date_edited = date
 
     def get_date_edited(self) -> datetime:
-        pass
+        return self.date_edited
 
     def get_tags(self) -> list[str]:
         return self.tags

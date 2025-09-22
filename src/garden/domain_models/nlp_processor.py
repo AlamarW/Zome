@@ -1,4 +1,6 @@
 import re
+import os
+from pathlib import Path
 from typing import TextIO, ClassVar 
 import string
 from gensim import corpora # type: ignore
@@ -6,8 +8,10 @@ from gensim import models # type: ignore
 from gensim.utils import simple_preprocess # type: ignore[import]
 
 class NLPProcessor:
-    _f: ClassVar[TextIO]
-    with open("stop_words_english.txt", "r") as _f:
+    _resources_dir = Path(__file__).parents[3] / "resources"
+    _stop_words_file = _resources_dir / "stop_words_english.txt"
+
+    with open(_stop_words_file, "r") as _f:
         _stop_words: set[str] = set(word.strip().lower() for word in _f)
 
     def __init__(self):
